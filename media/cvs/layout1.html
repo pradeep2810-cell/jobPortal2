@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Welcome</title>
+		<meta charset="UTF-8" />
+		<link href="my_css1.css" rel="stylesheet" type="text/css" />
+	</head>
+	
+	<body>
+		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	
+		<div id="main">
+			<header>
+				<div class="subheader" id="header1">
+					<img src="himal.jpg" alt="Logo" />
+					<h1>Himalayan Tours & Travels</h1>
+				</div>
+				<div class="subheader" id="header2">
+					
+				</div>
+			</header>
+			
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About &dtrif;</a>
+						<ul>
+							<li><a href="#">Introduction</a></li>
+							<li><a href="#">Achievements &dtrif;</a>
+								<ul>
+									<li><a href="#">Image</a></li>
+									<li><a href="#">Audio</a></li>
+									<li><a href="#">Video</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Mission & Goals</a></li>
+						</ul>
+					</li>
+					<li><a href="#" target="_blank">Our Services</a></li>
+					<li><a href="#">Gallery &dtrif;</a>
+						<ul>
+							<li><a href="#">Image</a></li>
+							<li><a href="#">Audio</a></li>
+							<li><a href="#">Video</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Contacts</a></li>
+				</ul>
+			</nav>
+			
+			<section id="slider">
+				<img src="himal.jpg" alt="Slider Image" id="simg1" /> 
+				<img src="river.jpg" alt="Slider Image" id="simg2" /> 
+				<img src="wild.png" alt="Slider Image" id="simg3" /> 
+				<h1 style="color: red;" id="slider-txt">
+					Welcome
+				</h1>
+				
+				<script>
+					$(document).ready(function(){
+						//$('#slider-txt').hide(5000);
+						//$('#slider-txt').show(5000);
+						//$('#slider-txt').fadeOut(5000);
+						//$('#slider-txt').fadeIn(5000);
+						//$('#slider').slideUp(5000);
+						//$('#slider').slideDown(5000);
+						//$('#slider-txt').animate({'left': '50%', 'top': '-300px'}, 3000);
+						//$('#slider-txt').animate({'top': '-300px'}, 3000);
+						//$('#simg').hide(3000, )
+						
+						$('#simg2').css('display', 'none');
+						$('#simg3').css('display', 'none');
+						slider();
+						setInterval(slider, 20000);
+					});
+					
+					function slider()
+						{
+							$('#simg1').fadeOut(3000, function(){
+								$('#simg2').fadeIn(3000, function(){
+									$('#simg2').fadeOut(3000, function(){
+										$('#simg3').fadeIn(3000, function(){
+											$('#simg3').fadeOut(3000, function(){
+												$('#simg1').fadeIn(3000);
+											});
+										});
+									});
+								});
+							});
+						}
+				</script>
+				
+			</section>
+			
+			<section id="display">
+				<div class="subdisplay">
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Address</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Address</th>
+						</tr>
+						<tr>
+							<td>Rohit</td>
+							<td>rohit@email.com</td>
+							<td>ktm</td>
+							<td>Rohit</td>
+							<td>rohit@email.com</td>
+							<td>ktm</td>
+						</tr>
+					</table>
+				</div>
+				<div class="subdisplay"></div>
+				<div class="subdisplay"></div>
+			</section>
+			
+			<footer>
+				<p>
+					Copyright &copy; 2022. Himalayan Tours & Travels
+				</p>
+				<form method="post">
+					<input type="text" name="name" 
+						placeholder="Email" />
+					<input type="submit" 
+						onclick="return confirm('Are you sure')" 
+						value="Subscribe" />
+				</form>
+			</footer>
+			
+			<!--
+			<article></article>
+			<aside></aside>
+			-->
+		</div>
+		
+		
+		<script>
+                // alert('Hello World!');
+                // document.write('Hello World!');
+                // console.log('Hello World!');
+				// document.getElementById('test').innerHTML = 'New <i>Text</i>';
+                // document.getElementById('test').align = 'center';
+                // document.getElementById('test').setAttribute('class', 'my_class');
+                // a = document.getElementById('test').getAttribute('id');
+                // document.getElementById('test').style.color = 'red';
+				//a = prompt('Enter your name')
+				
+				// onclick ondoubleclick onmouserover onmouseout,
+				// onkeyup onkeydown onkeypress 
+				// onselect onchange onchecked onfocus onfocusout
+				
+				//single element selector
+				document.getElementById('test')
+				document.forms['form_name']['el_name'];
+				
+				// multiple element (collection/array) selector
+				document.getElementsByTagName;
+				document.getElementsByClassName;
+				document.getElementsByName;
+				
+				//show yourself:- queryselector
+				
+				a = 'ram'
+				b = ['ram']
+				
+				
+				
+				
+				a = 10;
+				var b = "10";
+				d = String(a);
+				let c = "ram";
+
+                function myFunction()
+                {
+                    pwd = document.getElementById('pw').value;
+                    cpwd = document.getElementById('cpw').value;
+                    if(pwd !== cpwd){
+                        alert('Password mismatch');
+                        return false;
+                    }
+                    return true;
+                }
+				
+            </script>
+		
+	</body>
+</html>	

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HOME -->
+<section class="section-hero overlay inner-page bg-image"
+         style="background-image: url('{% static 'theme/images/hero_1.jpg' %}');"
+         id="home-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h1 class="text-white font-weight-bold">Profile</h1>
+                <div class="custom-breadcrumbs">
+                    <a href="#">Home</a> <span class="mx-2 slash">/</span>
+                    <span class="text-white"><strong>Profile</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="site-section">
+    <div class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-12 text-center">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="fn" placeholder="First Name"
+                               value="{{ request.user.first_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="ln" placeholder="Last Name"
+                               value="{{ request.user.last_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="em" placeholder="Email"
+                               value="{{ request.user.email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="un" placeholder="Username"
+                               value="{{ request.user.username }}" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="pw" placeholder="Password"
+                               value="{{ request.user.password }}" id="pw" required>
+                        <button type="button" id="show" style="position: relative;left: 45%; top: -35px;">
+                            <span class="mr-2 icon-eye"></span>
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="cpw" placeholder="Confirm Password"
+                               value="{{ request.user.password }}" id="cpw" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary" value="Update" id="btnUpdate">
+                    </div>
+
+                    <script>
+                        $('#show').click(function (){
+                            if ($('#pw').attr('type') == 'password')
+                                $('#pw').attr('type', 'text');
+                            else
+                                $('#pw').attr('type', 'password');
+                        });
+
+                        $('#btnUpdate').click(function (){
+                            if ($('#pw').val() !== $('#cpw').val()) {
+                                alert('password mismatch');
+                                return false;
+                            }
+                            else
+                                return true;
+                        });
+
+                    </script>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

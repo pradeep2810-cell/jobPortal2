@@ -1,0 +1,377 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>JobBoard &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content="Free-Template.co"/>
+
+    <link rel="stylesheet" href="{% static 'theme/css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/fonts/line-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'theme/css/animate.min.css' %}">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{% static 'theme/css/style.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body id="top">
+
+<div id="overlayer"></div>
+<div class="loader">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    {% if messages %}
+    <header class="site-navbar mt-3">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="site-logo col-6">
+                    <div class="alert"
+                         style="position: absolute; top: 0; left: 0; width: 100%; z-index:999999;">
+                        {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger {% else %}{{ message.tags }} {% endif %}"
+                             role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% endif %}
+
+
+    <!-- NAVBAR -->
+    <header class="site-navbar mt-3">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="site-logo col-6">
+                    <a href="{% url 'home' %}">JobBoard</a>
+                </div>
+
+                <nav class="mx-auto site-navigation">
+                    <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+                        <li><a href="{% url 'home' %}" class="nav-link active">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+
+                        <li class="has-children">
+                            <a href="#">Job Categories</a>
+                            <ul class="dropdown">
+                                {% for c in categories %}
+                                <li><a href="{% url 'job_by_category' category=c.id %}">{{ c.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <!--
+                        <li class="has-children">
+                          <a href="services.html">Pages</a>
+                          <ul class="dropdown">
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="service-single.html">Service Single</a></li>
+                            <li><a href="blog-single.html">Blog Single</a></li>
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="portfolio-single.html">Portfolio Single</a></li>
+                            <li><a href="testimonials.html">Testimonials</a></li>
+                            <li><a href="faq.html">Frequently Ask Questions</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                          </ul>
+                        </li>
+                        -->
+                        <li><a href="{% url 'jobs' %}">Jobs</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="{% url 'contacts' %}">Contact</a></li>
+                        <li class="d-lg-none">
+                            <a href="post-job.html">
+                                <span class="mr-2">+</span> Post a Job
+                            </a>
+                        </li>
+                        <li class="d-lg-none"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
+                        <li class="d-lg-none"><a href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
+                    <div class="ml-auto">
+                        {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                        <a href="#" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">
+                            <span class="mr-2 icon-add"></span>Post a Job
+                        </a>
+                        {% endif %}
+                        <div class="dropdown d-inline">
+                            <button class="btn btn-primary border-width-2 d-none d-lg-inline-block dropdown-toggle"
+                                    type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                <span class="mr-2 icon-user"></span> {{ request.user }} &dtrif;
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                                <a class="dropdown-item" href="{% url 'myapplications' %}">My Applications</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                            </div>
+                        </div>
+                        <!--                        <a href="{% url 'logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">-->
+                        <!--                            <span class="mr-2 icon-lock_outline"></span>Log Out-->
+                        <!--                        </a>-->
+                        {% else %}
+                        <a href="#" class="btn btn-primary border-width-2 d-none d-lg-inline-block"
+                           data-toggle="modal" data-target="#loginModal">
+                            <span class="mr-2 icon-lock_outline"></span>Log In
+                        </a>
+                        <a href="#" class="btn btn-primary border-width-2 d-none d-lg-inline-block"
+                           data-toggle="modal" data-target="#registerModal">
+                            <span class="mr-2 icon-user"></span>Register
+                        </a>
+                        {% endif %}
+                    </div>
+                    <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span
+                            class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+
+                    <!-- Register Modal -->
+                    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="registerModalLabel">User Registration</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="fn" placeholder="First Name"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="ln" placeholder="Last Name"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="date" class="form-control" name="dob" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="radio" name="gender" value="Male" id="male" required>
+                                            <label for="male">Male</label>
+                                            <input type="radio" name="gender" value="Female" id="female" required>
+                                            <label for="female">Female</label>
+                                            <input type="radio" name="gender" value="Other" id="other" required>
+                                            <label for="other">Other</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="mobile" placeholder="Mobile"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="address" placeholder="Address"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="email" class="form-control" name="em" placeholder="Email"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="un" placeholder="Username"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control" name="pw" placeholder="Password"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control" name="cpw"
+                                                   placeholder="Confirm Password" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <textarea class="form-control" placeholder="Qualification"
+                                                      name="qualification" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" placeholder="Experience"
+                                                      name="experience" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" placeholder="Trainings"
+                                                      name="trainings" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" placeholder="Skills"
+                                                      name="skills" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">CV</label>
+                                            <input type="file" class="form-control" name="cv" required />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="">Image</label>
+                                            <input type="file" class="form-control" name="image" required />
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="submit" class="btn btn-primary" value="Register">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Login Modal -->
+                    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="loginModalLabel">User Login</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'login' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="un" placeholder="Username"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control" name="pw" placeholder="Password"
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="submit" class="btn btn-primary" value="Login">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    {% block content %}
+
+    {% endblock %}
+
+    <footer class="site-footer">
+
+        <a href="#top" class="smoothscroll scroll-top">
+            <span class="icon-keyboard_arrow_up"></span>
+        </a>
+
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-6 col-md-3 mb-4 mb-md-0">
+                    <h3>Search Trending</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">Graphic Design</a></li>
+                        <li><a href="#">Web Developers</a></li>
+                        <li><a href="#">Python</a></li>
+                        <li><a href="#">HTML5</a></li>
+                        <li><a href="#">CSS3</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3 mb-4 mb-md-0">
+                    <h3>Company</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Career</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3 mb-4 mb-md-0">
+                    <h3>Support</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3 mb-4 mb-md-0">
+                    <h3>Contact Us</h3>
+                    <div class="footer-social">
+                        <a href="#"><span class="icon-facebook"></span></a>
+                        <a href="#"><span class="icon-twitter"></span></a>
+                        <a href="#"><span class="icon-instagram"></span></a>
+                        <a href="#"><span class="icon-linkedin"></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col-12">
+                    <p class="copyright"><small>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved | This template is made with <i class="icon-heart text-danger"
+                                                                            aria-hidden="true"></i> by <a
+                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="{% static 'theme/js/jquery.min.js' %}"></script>
+<script src="{% static 'theme/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'theme/js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'theme/js/stickyfill.min.js' %}"></script>
+<script src="{% static 'theme/js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'theme/js/jquery.easing.1.3.js' %}"></script>
+
+<script src="{% static 'theme/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'theme/js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'theme/js/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'theme/js/bootstrap-select.min.js' %}"></script>
+
+<script src="{% static 'theme/js/custom.js' %}"></script>
+
+
+</body>
+</html>
